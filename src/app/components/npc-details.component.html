@@ -1,0 +1,20 @@
+<mat-card *ngIf="npc">
+    <mat-card-header>
+        <mat-card-title>           
+            {{npc.npcName.name}}
+            <span *ngIf="npc.npcName.nick">[{{npc.npcName.nick}}]</span>
+        </mat-card-title>
+        <mat-card-subtitle>{{npc.npcName.npcType}} Level {{npc.level}}</mat-card-subtitle>
+        
+    </mat-card-header>
+    <search-panel (searchItemId)="doSearch($event)"></search-panel>
+    <mat-tab-group>
+        <mat-tab label="Info"> 
+            <npc-parameters></npc-parameters> 
+        </mat-tab>
+        <mat-tab label="Drop/Spoil"> 
+            <npc-drop-spoil></npc-drop-spoil>
+        </mat-tab>
+        <mat-tab label="Location"> <npc-location></npc-location> </mat-tab>
+    </mat-tab-group>
+</mat-card>

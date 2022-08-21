@@ -1,0 +1,53 @@
+<div>
+    <div>
+        <mat-label>Drop</mat-label>
+        <table *ngIf="npc">
+            <thead>
+                <tr>
+                    <th>Item Name</th>
+                    <th>Quantity</th>
+                    <th>Crystals (Grade)</th>
+                    <th>Chance</th>
+                </tr>                
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of npc.drop;">
+                    <td *ngIf="item.nameInfo">{{item.nameInfo.name}}</td>
+                    <td *ngIf="item.max != 1">{{item.min}}-{{item.max}}</td>
+                    <td *ngIf="item.crystal">
+                        <div *ngIf="item.crystal.count > 0">
+                            {{item.crystal.count}} ({{item.crystal.crystalType}})
+                        </div>
+                    </td>
+                    <td>{{item.chance}}%</td>
+                </tr>                
+            </tbody>
+        </table>
+    </div>
+    
+    <div>
+        <mat-label>Spoil</mat-label>
+        <table *ngIf="npc">
+            <thead>
+                <tr>
+                    <th>Item Name</th>
+                    <th>Quantity</th>
+                    <th>Crystals (Grade)</th>
+                    <th>Chance</th>
+                </tr>                
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of npc.spoil;">
+                    <td *ngIf="item.nameInfo">{{item.nameInfo.name}}</td>
+                    <td *ngIf="item.max != 1">{{item.min}}-{{item.max}}</td>
+                    <td *ngIf="item.crystal">
+                        <div *ngIf="item.crystal.count > 0">
+                            {{item.crystal.count}} ({{item.crystal.crystalType}})
+                        </div>
+                    </td>
+                    <td>{{item.chance}}%</td>
+                </tr>                
+            </tbody>
+        </table>
+    </div>
+</div>

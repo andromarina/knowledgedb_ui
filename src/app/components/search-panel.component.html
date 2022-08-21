@@ -1,0 +1,10 @@
+<mat-form-field appearance="standard" class="search" #search>
+    <mat-label>Enter Name</mat-label>
+    <input matInput placeholder="Enter search key" [formControl]="searchControl" [matAutocomplete]="auto">
+    <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn" (optionSelected)="doSearch($event)">
+        <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+          {{displayFn(option)}}
+        </mat-option>
+      </mat-autocomplete>
+    <mat-icon matSuffix>search</mat-icon>       
+</mat-form-field>
