@@ -17,7 +17,7 @@ export class NpcService {
         this.npc = this.npcSubject.asObservable();
     }
 
-    public setNpc(npc: Npc) {
+    public setNpc(npc: Npc) {                   
         this.npcSubject.next(npc);
     }
 

@@ -1,0 +1,22 @@
+<span class="item-box" 
+        matTooltip="{{getTooltip()}}"
+style="display: inline-flex;
+ border:solid; border-width: 1px;width: fit-content;
+ border-color: dimgrey; vertical-align: middle;">
+    <img [lazyLoad]="getImagePath()"
+    [defaultImage]="defaultImage" 
+    placement="left"     
+    container="body">
+</span>
+
+<ng-template mat-tooltip-content>
+    <div  
+    style="display: inline-block;
+    overflow: hidden;
+    white-space: nowrap; 
+    justify-content: flex-start; display: flex;">
+        <b>{{item.nameInfo.name}}</b>       
+    </div>
+    <p style="text-align: left;">Id: {{item.nameInfo.itemClassId}}</p>
+    <p style="text-align: left;" [innerHtml]="item.nameInfo.description"></p>
+</ng-template>

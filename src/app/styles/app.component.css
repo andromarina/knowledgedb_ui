@@ -7,25 +7,20 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  margin: 8px 0;
+.mat-h3, .mat-subheading-2, .mat-typography h3 {
+  margin: 0 0 0px;
 }
 
-p {
-  margin: 0;
+.mat-h2, .mat-typography h2 {
+  margin: 0 0 0px;
 }
+
 
 .spacer {
   flex: 1;
 }
 
-.toolbar {
-  position: absolute;
+.toolbar { 
   top: 0;
   left: 0;
   right: 0;
@@ -34,15 +29,41 @@ p {
   align-items: center;
   background-color: #375a7f;
   color: white;
-  height: 45px;
+  height: 40px;
 }
 
 .toolbar img {
-  margin: 0 16px;
+  margin: 0 10px;
+  border-radius: 2px;
+}
+
+.toolbar button {
+  background: transparent;
+  border: none;
+}
+
+.card-small {
+  margin-bottom: 10px;
+}
+
+npc-parameters thead {
+ visibility: collapse;
 }
 
 .mat-form-field-appearance-fill .mat-form-field-flex {
   background-color: transparent;
+}
+
+.mat-form-field {
+  font-weight: 200;
+}
+
+.mat-option {
+  height: 30px!important;
+}
+
+search-panel, item-search-panel {
+  width: 50%;
 }
 
 ::ng-deep .mat-focused .mat-form-field-label {
@@ -69,6 +90,10 @@ mat-icon {
   color: white;
 }
 
+tr.mat-row, tr.mat-footer-row {
+  height: 40px !important;
+}
+
 .search {
   width: 100%;
   color: white;
@@ -77,17 +102,30 @@ mat-icon {
 .content {
   background-color: #303030;
   display: flex;
-  margin: 45px auto 32px;
+  margin: 15px auto 32px;
   padding: 0 16px;
   flex-direction: column;
   align-items: center;
-  min-height: 1000px;
+  min-height: 900px;
+}
+
+mat-card {
+  width: 900px;
+}
+
+npc-parameters, npc-drop-spoil {
+  text-align: -webkit-center;
 }
 
 .noRecords {
   color: papayawhip;
   text-align: -webkit-center;
   padding-top: 10px;
+}
+
+.itemName {
+  padding-left: 10px;
+  vertical-align: middle;
 }
 
 svg.material-icons {
@@ -99,17 +137,59 @@ svg.material-icons:not(:last-child) {
   margin-right: 8px;
 }
 
+.location {
+  padding-left: 10px;
+  vertical-align: sub;
+}
 
+tr.mat-header-row {
+  height: 30px !important;
+}
+
+mat-header-row, mat-row{
+  border-bottom-style: none;
+}
+
+table {
+  width: 900px;   
+}
+
+.container {
+  border: 1px solid rgba(0, 0, 0, 0.5);
+}
+.sidenav-content {
+  display: flex;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+}
+.sidenav {
+   user-select: none;
+}
+.full-width {
+  width: 100%;
+}
+.menu-button {
+  transition: 300ms ease-in-out;
+  transform: rotate(0deg);
+}
+.menu-button.rotated {
+  transform: rotate(180deg);
+}
+
+.mat-drawer {
+  top: 45px;
+}
 
 a,
 a:visited,
 a:hover {
-  color: #1976d2;
+  color: #00bc8c;
   text-decoration: none;
 }
 
 a:hover {
-  color: #125699;
+  color: #00a077;
 }
 
 .terminal {

@@ -11,12 +11,17 @@ import { BackendService, NpcService } from "../services";
 export class NpcDetailsComponent implements OnInit, OnDestroy {
   npcSubscription!: Subscription;
   routeSubscription!: Subscription;
+  chronicleSubscription!: Subscription;
+  selectedTabSubscr!: Subscription;
   dataSource: any[] = [];
-  npc!: Npc;  
+  selectedTab = 0;
+  selectedChronicle = "";
+  npc!: Npc;
+  activeId = -1;
 
   constructor(private backendService: BackendService,
     private activatedRoute: ActivatedRoute,
-    private router: Router, 
+    private router: Router,
     private npcService: NpcService) { }
 
   ngOnDestroy(): void {
@@ -26,33 +31,69 @@ export class NpcDetailsComponent implements OnInit, OnDestroy {
     if (this.routeSubscription) {
       this.routeSubscription.unsubscribe();
     }
+    if (this.chronicleSubscription) {
+      this.chronicleSubscription.unsubscribe();
+    }
+    if (this.selectedTabSubscr) {
+      this.selectedTabSubscr.unsubscribe();
+    }
   }
 
   ngOnInit(): void {
+
     this.routeSubscription = this.activatedRoute.params.subscribe(params => {
       const id = params['id'];
       if (!id) {
         return;
       }
-      this.npcSubscription = this.backendService.getNpcDetail(id)
-        .subscribe(res => {this.npc = res; this.npcService.setNpc(res)});
+      this.activeId = id;    
+    });
+    this.selectedTabSubscr = this.activatedRoute.queryParams.subscribe(params => this.selectedTab = params.tab);
+
+    this.chronicleSubscription = this.backendService.chronChoice.subscribe(res => {    
+        this.init(this.activeId);
+        this.selectedChronicle = res;      
     });
   }
 
-  doSearch(id: number) {    
-    this.npcSubscription = this.backendService.getNpcDetail(id).subscribe(res => {this.npc = res; this.npcService.setNpc(res)});
+  init(id: number) {
+    console.log("npc details init: " + id);
+    this.npcSubscription = this.backendService.getNpcDetail(id)
+      .subscribe(res => { this.npc = res; this.npcService.setNpc(res) });
+
+  }
+
+  doSearch(id: number) {
+    this.npcSubscription = this.backendService.getNpcDetail(id).subscribe(res => { this.npc = res; this.npcService.setNpc(res) });
     this.navigateById(id);
   }
-  
+
   navigateById(id: number) {
+    this.router.navigate(
+      ['../' + id],
+      {
+        relativeTo: this.activatedRoute,
+        queryParams: {
+          tab: this.selectedTab
+        },
+        queryParamsHandling: 'merge'
+      });
+  }
+
+  navigateByTab(tabIndex: number) {
     this.router.navigate(
       [],
       {
-          relativeTo: this.activatedRoute,
-          queryParams: {
-              npcId: id,            
-          },
-      });     
+        relativeTo: this.activatedRoute,
+        queryParams: {
+          tab: tabIndex
+        },
+        queryParamsHandling: 'merge'
+      });
+  }
+
+  setSelected(tab: any) {
+    this.navigateByTab(tab.index);
   }
 
 }

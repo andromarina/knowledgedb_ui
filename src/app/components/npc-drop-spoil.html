@@ -1,53 +1,33 @@
 <div>
-    <div>
-        <mat-label>Drop</mat-label>
-        <table *ngIf="npc">
-            <thead>
-                <tr>
-                    <th>Item Name</th>
-                    <th>Quantity</th>
-                    <th>Crystals (Grade)</th>
-                    <th>Chance</th>
-                </tr>                
-            </thead>
-            <tbody>
-                <tr *ngFor="let item of npc.drop;">
-                    <td *ngIf="item.nameInfo">{{item.nameInfo.name}}</td>
-                    <td *ngIf="item.max != 1">{{item.min}}-{{item.max}}</td>
-                    <td *ngIf="item.crystal">
-                        <div *ngIf="item.crystal.count > 0">
-                            {{item.crystal.count}} ({{item.crystal.crystalType}})
-                        </div>
-                    </td>
-                    <td>{{item.chance}}%</td>
-                </tr>                
-            </tbody>
-        </table>
-    </div>
-    
-    <div>
-        <mat-label>Spoil</mat-label>
-        <table *ngIf="npc">
-            <thead>
-                <tr>
-                    <th>Item Name</th>
-                    <th>Quantity</th>
-                    <th>Crystals (Grade)</th>
-                    <th>Chance</th>
-                </tr>                
-            </thead>
-            <tbody>
-                <tr *ngFor="let item of npc.spoil;">
-                    <td *ngIf="item.nameInfo">{{item.nameInfo.name}}</td>
-                    <td *ngIf="item.max != 1">{{item.min}}-{{item.max}}</td>
-                    <td *ngIf="item.crystal">
-                        <div *ngIf="item.crystal.count > 0">
-                            {{item.crystal.count}} ({{item.crystal.crystalType}})
-                        </div>
-                    </td>
-                    <td>{{item.chance}}%</td>
-                </tr>                
-            </tbody>
-        </table>
-    </div>
+
+    <table *ngIf="dataSource && dataSource.length > 0" mat-table [dataSource]="dataSource" class="mat-elevation-z5"
+        style="width: 60%;margin-top: 15px">
+        <ng-container matColumnDef="itemName">
+            <th mat-header-cell *matHeaderCellDef>Item Name</th>
+            <td mat-cell *matCellDef="let item">
+                <item-box [item]="item"></item-box>
+                <span class="itemName"><a [routerLink]="['../../items']"
+                        [queryParams]="{itemId: item.nameInfo.itemClassId, chronicle:chronicle}"
+                        class="nav-item nav-link">{{item.nameInfo.name}}</a></span>
+                <!-- <span class="itemName">{{item.nameInfo.name}}</span>  -->
+                <span>{{displayQuantityFn(item)}}</span>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="crystal">
+            <th mat-header-cell *matHeaderCellDef>Crystals (Grade)</th>
+            <td mat-cell *matCellDef="let item"> {{displayCrystalsFn(item)}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="chance">
+            <th mat-header-cell *matHeaderCellDef>Chance</th>
+            <td mat-cell *matCellDef="let item"> {{calculateChance(item.chance)}} </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    <div *ngIf="dataSource && dataSource.length === 0" class="noRecords">No records found</div>
+
 </div>

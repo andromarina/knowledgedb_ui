@@ -1,20 +1,25 @@
 <mat-card *ngIf="npc">
-    <mat-card-header>
-        <mat-card-title>           
-            {{npc.npcName.name}}
-            <span *ngIf="npc.npcName.nick">[{{npc.npcName.nick}}]</span>
-        </mat-card-title>
-        <mat-card-subtitle>{{npc.npcName.npcType}} Level {{npc.level}}</mat-card-subtitle>
-        
-    </mat-card-header>
-    <search-panel (searchItemId)="doSearch($event)"></search-panel>
-    <mat-tab-group>
+    <div class="row" style="align-items: center">
+        <mat-card-header>
+            <mat-card-title>           
+                {{npc.npcName.name}}
+                <span *ngIf="npc.npcName.nick">[{{npc.npcName.nick}}]</span>
+            </mat-card-title>
+            <mat-card-subtitle>{{npc.npcName.npcType}} Level {{npc.level}}</mat-card-subtitle>        
+        </mat-card-header>
+        <search-panel (searchItemId)="doSearch($event)"></search-panel>
+    </div>
+    
+    <mat-tab-group [selectedIndex]="selectedTab" (selectedTabChange)="setSelected($event)">        
+        <mat-tab label="Drop"> 
+            <npc-drop-spoil [dataSource]="npc.drop" *ngIf="npc"></npc-drop-spoil>
+        </mat-tab>
+        <mat-tab label="Spoil"> 
+            <npc-drop-spoil [dataSource]="npc.spoil" *ngIf="npc"></npc-drop-spoil>
+        </mat-tab>
         <mat-tab label="Info"> 
-            <npc-parameters></npc-parameters> 
+            <npc-parameters [npc]="npc" *ngIf="npc"></npc-parameters> 
         </mat-tab>
-        <mat-tab label="Drop/Spoil"> 
-            <npc-drop-spoil></npc-drop-spoil>
-        </mat-tab>
-        <mat-tab label="Location"> <npc-location></npc-location> </mat-tab>
+        <mat-tab label="Location" [disabled]='!npc.isLocationExist'> <npc-location></npc-location> </mat-tab>
     </mat-tab-group>
 </mat-card>

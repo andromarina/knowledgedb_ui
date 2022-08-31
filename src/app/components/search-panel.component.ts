@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Output } from "@angular/core";
 import { FormControl } from "@angular/forms";
 import { MatAutocompleteSelectedEvent } from "@angular/material/autocomplete";
-import { Observable, Subscription } from "rxjs";
+import { Subscription } from "rxjs";
 import { map, startWith } from "rxjs/operators";
 import { NpcName } from "../models/npc-model";
 import { BackendService } from "../services";
@@ -12,9 +12,14 @@ import { BackendService } from "../services";
   })
   export class SearchPanelComponent  {
   namesSubscription!: Subscription;
+  chronSubscr!: Subscription;
+  valuesChangeSubscr!: Subscription;
+
   names: NpcName[] = [];
-  filteredOptions!: Observable<NpcName[]>;
+  filteredOptions!: NpcName[];
   searchControl = new FormControl();
+  chronicleChoice = "";
+  public height: string = '100';
 
   @Output()
   searchItemId = new EventEmitter();
@@ -23,23 +28,37 @@ import { BackendService } from "../services";
 
   ngOnDestroy(): void {
     this.namesSubscription.unsubscribe();
+    this.chronSubscr.unsubscribe();
+    this.valuesChangeSubscr.unsubscribe();
   }
 
   ngOnInit(): void {  
+    this.chronSubscr = this.backendService.chronChoice.subscribe(res => {this.chronicleChoice = res; this.init()}); 
+  }
+
+  init() {
     this.namesSubscription = this.backendService.getNpcNames().subscribe(res => this.names = res);
-    this.filteredOptions = this.searchControl.valueChanges.pipe(
+    this.valuesChangeSubscr = this.searchControl.valueChanges.pipe(
       startWith(''),
       map(value => {
-        const name = typeof value === 'string' ? value : value?.name;
-        return name ? this._filter(name as string) : this.names.slice();
-      }),
-    );
+        if (!value) {
+          return;
+        }
+        this.filteredOptions = this.names.filter(option => option.name.toLowerCase().includes(value.toString().toLowerCase()));
+
+        // Recompute how big the viewport should be.
+        if (this.filteredOptions.length < 4) {
+          this.height = (this.filteredOptions.length * 50) + 'px';
+        } else {
+          this.height = '200px'
+        }
+      })
+     ).subscribe();
   }
 
   reset() {
     this.searchControl.reset();
   }
-
 
   doSearch(event: MatAutocompleteSelectedEvent) {
     var selectedId = event.option.value.id;
@@ -56,12 +75,6 @@ import { BackendService } from "../services";
     }
     result += npcName.name;
     return  result;
-  }
-
-  private _filter(name: string): NpcName[] {
-    const filterValue = name.toLowerCase();
-
-    return this.names.filter(option => option.name.toLowerCase().includes(filterValue));
   }
   
 }

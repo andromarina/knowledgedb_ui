@@ -15,11 +15,22 @@ import { MatSelectModule } from '@angular/material/select';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { NpcDetailsComponent } from './components/npc-details.component';
-import {MatCardModule} from '@angular/material/card';
-import {MatTabsModule} from '@angular/material/tabs';
+import { MatCardModule } from '@angular/material/card';
+import { MatTabsModule } from '@angular/material/tabs';
 import { NpcParametersComponent } from './components/npc-parameters.component';
 import { NpcDropSpoilComponent } from './components/npc-drop-spoil.component';
 import { NpcLocationComponent } from './components/location.component';
+import { ItemBoxComponent } from './components/item-box-component';
+import { LazyLoadImageModule } from 'ng-lazyload-image';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatListModule } from '@angular/material/list';
+import {MatToolbarModule} from '@angular/material/toolbar'
+import { ItemsComponent } from './components/items-component';
+import { ItemsSearchPanel } from './components/items-search-panel.component';
+import {ScrollingModule} from '@angular/cdk/scrolling';
+import {MatSortModule} from '@angular/material/sort';
+ 
 
 @NgModule({
   declarations: [
@@ -29,7 +40,10 @@ import { NpcLocationComponent } from './components/location.component';
     NpcDetailsComponent,
     NpcParametersComponent,
     NpcDropSpoilComponent,
-    NpcLocationComponent
+    NpcLocationComponent,
+    ItemBoxComponent,
+    ItemsComponent,
+    ItemsSearchPanel
   ],
   imports: [
     BrowserModule,
@@ -44,7 +58,14 @@ import { NpcLocationComponent } from './components/location.component';
     ReactiveFormsModule,
     MatAutocompleteModule,
     MatCardModule,
-    MatTabsModule
+    MatTabsModule,
+    LazyLoadImageModule,
+    MatTooltipModule,
+    MatSidenavModule,
+    MatListModule,
+    MatToolbarModule,
+    ScrollingModule,
+    MatSortModule
   ],
   providers: [
     { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'fill' } }

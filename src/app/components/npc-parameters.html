@@ -1,56 +1,16 @@
-<table class="table table-hover table-sm-4" *ngIf="npc">
-    <tbody>
-        <tr>
-            <td style="border-top:none" scope="row">Acquire Exp Rate</td>
-            <td style="border-top:none">{{npc.acquireExpRate}}</td>
-        </tr>
-        <tr>
-            <td style="border-top:none" scope="row">Acquire Sp</td>
-            <td style="border-top:none">{{npc.sp}}</td>
-        </tr>
-        <tr>
-            <td style="border-top:none" scope="row">Org Hp</td>
-            <td style="border-top:none">{{npc.hp}}</td>
-        </tr>
-        <tr>
-            <td style="border-top:none" scope="row">Org Mp</td>
-            <td style="border-top:none">{{npc.mp}}</td>
-        </tr>
-        <tr>
-            <td style="border-top:none" scope="row">Base Defend</td>
-            <td style="border-top:none">{{npc.def}}</td>
-        </tr>
-        <tr>
-            <td style="border-top:none" scope="row">Base Magic Attack</td>
-            <td style="border-top:none">{{npc.m_atk}}</td>
-        </tr>
-        <tr>
-            <td style="border-top:none" scope="row">Base Magic Defend</td>
-            <td style="border-top:none">{{npc.m_def}}</td>
-        </tr>
-        <tr>
-            <td style="border-top:none" scope="row">Base Physical Attack</td>
-            <td style="border-top:none">{{npc.p_atk}}</td>
-        </tr>
-        <tr>
-            <td style="border-top:none" scope="row">Physical Hit Modify</td>
-            <td style="border-top:none">{{npc.physicalHitModify}}</td>
-        </tr>
-        <tr>
-            <td style="border-top:none" scope="row">Physical Avoid Modify</td>
-            <td style="border-top:none">{{npc.physicalAvoidModify}}</td>
-        </tr>
-        <tr>
-            <td style="border-top:none" scope="row">Base Attack Speed</td>
-            <td style="border-top:none">{{npc.atk_speed}}</td>
-        </tr>
-        <tr>
-            <td style="border-top:none" scope="row">Base Critical</td>
-            <td style="border-top:none">{{npc.crit}}</td>
-        </tr>
-        <tr>
-            <td style="border-top:none" scope="row">Social</td>
-            <td style="border-top:none">{{npc.social}}</td>
-        </tr>       
-    </tbody>
+<table *ngIf="npc" mat-table [dataSource]="dataSource" class="mat-elevation-z5" 
+style="width: 50%;margin-top: 15px">
+
+    <ng-container matColumnDef="paramName"> 
+        <th mat-header-cell *matHeaderCellDef></th>      
+        <td mat-cell *matCellDef="let item"> {{item.paramName}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="value">
+        <th mat-header-cell *matHeaderCellDef></th>      
+        <td mat-cell *matCellDef="let item" > {{item.value}} </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>    
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 </table>

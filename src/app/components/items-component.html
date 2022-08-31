@@ -1,0 +1,80 @@
+<mat-card>
+    <div class="row">   
+    <div *ngIf="itemOwners">
+        <h2>{{itemOwners.itemName}}</h2>
+        <div *ngIf="itemOwners.itemDescription">{{itemOwners.itemDescription}}</div>
+    </div>
+    <item-search-panel (searchItemId)="doSearch($event)"></item-search-panel>
+    </div>    
+        
+    <div *ngIf="itemOwners && itemOwners.drop.length > 0">
+        <h3>Drop</h3>
+        <table *ngIf="dropDataSource" mat-table [dataSource]="dropDataSource" class="mat-elevation-z5">           
+            <ng-container matColumnDef="npcName">
+                <th mat-header-cell *matHeaderCellDef>Name</th>
+                <td mat-cell *matCellDef="let item"> 
+                    <span class="itemName"><a [routerLink]="['/npcDetail/', item.npcName.id]" [queryParams]="{chronicle: selectedChronicle, tab: 0}"class="nav-item nav-link">{{item.npcName.name}} ({{item.level}})</a></span>
+     
+                    <span *ngIf="item.isLocationExist" class="location">
+                        <a [routerLink]="['/npcDetail/', item.npcName.id]" [queryParams]="{chronicle: selectedChronicle, tab: 3}" 
+                        class="nav-item nav-link"><mat-icon mat-list-icon>flag</mat-icon></a>
+                    </span>             
+            </ng-container>
+
+            <ng-container matColumnDef="type">
+                <th mat-header-cell *matHeaderCellDef>Type</th>
+                <td mat-cell *matCellDef="let item" >{{item.npcName.npcType}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="quantity">
+                <th mat-header-cell *matHeaderCellDef>Quantity</th>
+                <td mat-cell *matCellDef="let item">{{displayQuantity(item.drop)}}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="chance">
+                <th mat-header-cell *matHeaderCellDef>Chance</th>
+                <td mat-cell *matCellDef="let item">{{calculateChance(item.drop.chance)}} </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>    
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+    </div>
+
+    <div *ngIf="itemOwners && itemOwners.spoil.length > 0">
+        <h3>Spoil</h3>
+        <table *ngIf="spoilDataSource" mat-table [dataSource]="spoilDataSource" class="mat-elevation-z5">           
+            <ng-container matColumnDef="npcName">
+                <th mat-header-cell *matHeaderCellDef>Name</th>
+                <td mat-cell *matCellDef="let item"> 
+                    <span class="itemName"><a [routerLink]="['/npcDetail/', item.npcName.id]" [queryParams]="{chronicle: selectedChronicle, tab: 0}" class="nav-item nav-link">{{item.npcName.name}} ({{item.level}})</a></span>
+                    <!-- <span *ngIf="item.isLocationExist" class="location">
+                        <a routerLink="/npcDetail/{{item.npcName.id}}/3" class="nav-item nav-link"><mat-icon mat-list-icon>flag</mat-icon></a>                          
+                    </span>      -->
+                    <span *ngIf="item.isLocationExist" class="location">
+                        <a [routerLink]="['/npcDetail/', item.npcName.id]" [queryParams]="{chronicle: selectedChronicle, tab: 3}" 
+                        class="nav-item nav-link"><mat-icon mat-list-icon>flag</mat-icon></a>
+                    </span>           
+            </ng-container>
+
+            <ng-container matColumnDef="type">
+                <th mat-header-cell *matHeaderCellDef>Type</th>
+                <td mat-cell *matCellDef="let item" >{{item.npcName.npcType}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="quantity">
+                <th mat-header-cell *matHeaderCellDef>Quantity</th>
+                <td mat-cell *matCellDef="let item">{{displayQuantity(item.drop)}}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="chance">
+                <th mat-header-cell *matHeaderCellDef>Chance</th>
+                <td mat-cell *matCellDef="let item">{{calculateChance(item.drop.chance)}} </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>    
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+    </div>
+
+</mat-card>

@@ -23,61 +23,66 @@
     </div>   
 </div>
 
-<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+<table mat-table [dataSource]="dataSource" class="mat-5" 
+matSort (matSortChange)="announceSortChange($event)" matSortDisableClear="true">
     <ng-container matColumnDef="name">
         <th mat-header-cell *matHeaderCellDef>Name</th>
         <td mat-cell *matCellDef="let element">
-            <a routerLink="/npcDetail/{{element.npcName.id}}" class="nav-item nav-link">{{element.npcName.name}}</a>            
+            <a [routerLink]="['/npcDetail/', element.npcName.id]" [queryParams]="{chronicle: selectedChronicle}" class="nav-item nav-link">{{element.npcName.name}}</a> 
+            <span *ngIf="element.isLocationExist" class="location">
+                <a [routerLink]="['/npcDetail/', element.npcName.id]" [queryParams]="{chronicle: selectedChronicle, tab: 3}" 
+                class="nav-item nav-link"><mat-icon mat-list-icon>flag</mat-icon></a>
+            </span>           
         </td>
     </ng-container>
 
     <ng-container matColumnDef="level">
-        <th mat-header-cell *matHeaderCellDef>Level</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by level">Level</th>
         <td mat-cell *matCellDef="let element"> {{element.level}} </td>
     </ng-container>
 
     <ng-container matColumnDef="type">
         <th mat-header-cell *matHeaderCellDef>Type</th>
-        <td mat-cell *matCellDef="let element"> {{element.npcName.name}} </td>
+        <td mat-cell *matCellDef="let element"> {{element.npcName.npcType}} </td>
     </ng-container>
 
     <ng-container matColumnDef="sp">
-        <th mat-header-cell *matHeaderCellDef>SP</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by sp">SP</th>
         <td mat-cell *matCellDef="let element"> {{element.sp}} </td>
     </ng-container>
 
     <ng-container matColumnDef="hp">
-        <th mat-header-cell *matHeaderCellDef>HP</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by hp">HP</th>
         <td mat-cell *matCellDef="let element"> {{element.hp}} </td>
     </ng-container>
 
     <ng-container matColumnDef="mp">
-        <th mat-header-cell *matHeaderCellDef>MP</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by mp">MP</th>
         <td mat-cell *matCellDef="let element"> {{element.mp}} </td>
     </ng-container>
 
     <ng-container matColumnDef="p_atk">
-        <th mat-header-cell *matHeaderCellDef>P.Atk</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by p.atk">P.Atk</th>
         <td mat-cell *matCellDef="let element"> {{element.p_atk}} </td>
     </ng-container>
 
     <ng-container matColumnDef="m_atk">
-        <th mat-header-cell *matHeaderCellDef>M.Atk</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by m.atk">M.Atk</th>
         <td mat-cell *matCellDef="let element"> {{element.m_atk}} </td>
     </ng-container>
 
     <ng-container matColumnDef="atk_speed">
-        <th mat-header-cell *matHeaderCellDef>Atk.Speed</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by atk.speed">Atk.Speed</th>
         <td mat-cell *matCellDef="let element"> {{element.atk_speed}} </td>
     </ng-container>
 
     <ng-container matColumnDef="crit">
-        <th mat-header-cell *matHeaderCellDef>Crit</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by crit">Crit</th>
         <td mat-cell *matCellDef="let element"> {{element.crit}} </td>
     </ng-container>
 
     <ng-container matColumnDef="def">
-        <th mat-header-cell *matHeaderCellDef>Def</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by def">Def</th>
         <td mat-cell *matCellDef="let element"> {{element.def}} </td>
     </ng-container>
     
@@ -85,4 +90,4 @@
    
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 </table>
-<div *ngIf="dataSource.length === 0" class="noRecords">No records found</div>
+<div *ngIf="dataSource && dataSource.data && dataSource.data.length === 0" class="noRecords">No records found</div>

@@ -1,6 +1,6 @@
 export const environment = {
   production: false,
-  apiUrl: 'http://localhost:5000',
+  apiUrl: 'http://localhost:7000',
 //  apiUrl: 'https://apievol.elmorelab.com',
   resourcesServiceUrl: 'https://resources-service.elmorelab.com',
  // resourcesServiceUrl: 'http://localhost:5000',
